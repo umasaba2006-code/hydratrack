@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HydraTrack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SCREEN 1: WELCOME -->
+  <section id="screen-welcome" class="screen screen--centered active">
+    <div class="card card--intro">
+      <div class="brand">
+        <span class="brand__drop">&#128167;</span>
+        <h1 class="brand__title">HydraTrack</h1>
+      </div>
+      <p class="brand__tagline">Understand your hydration. Track your habits.</p>
+
+      <form id="form-profile" class="form" novalidate>
+        <label class="field">
+          <span class="field__label">Age</span>
+          <input type="number" id="input-age" min="1" max="120" placeholder="e.g. 20" required>
+        </label>
+        <label class="field">
+          <span class="field__label">Weight (kg)</span>
+          <input type="number" id="input-weight" min="1" max="400" step="0.1" placeholder="e.g. 65" required>
+        </label>
+        <p id="profile-error" class="form-error" hidden></p>
+        <button type="submit" class="btn btn--primary btn--block">Calculate My Target</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: TARGET -->
+  <section id="screen-target" class="screen screen--centered">
+    <div class="card card--intro">
+      <p class="eyebrow">Your estimated daily hydration target</p>
+      <div class="target-hero">
+        <span class="target-hero__drop">&#128167;</span>
+        <span id="target-value" class="target-hero__value">0 ml</span>
+      </div>
+      <p id="target-formula" class="target-formula"></p>
+      <p class="disclaimer">
+        This is a general estimate based on body weight alone. Real hydration needs
+        vary with activity level, climate, diet, health conditions, and pregnancy or
+        breastfeeding. HydraTrack does not provide medical advice &mdash; check with a
+        healthcare professional for guidance specific to you.
+      </p>
+      <button id="btn-start-tracking" class="btn btn--primary btn--block">Start Tracking</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: DASHBOARD -->
+  <section id="screen-dashboard" class="screen">
+    <header class="dash-header">
+      <div class="brand brand--small">
+        <span class="brand__drop">&#128167;</span>
+        <h1 class="brand__title brand__title--small">HydraTrack</h1>
+      </div>
+      <button id="btn-edit-profile" class="btn btn--ghost">Edit profile</button>
+    </header>
+
+    <main class="dash-grid">
+
+      <!-- Progress / wave gauge -->
+      <div class="card card--gauge">
+        <h2 class="card__title">Today's Hydration</h2>
+
+        <div class="gauge">
+          <svg viewBox="0 0 220 220" class="gauge__ring">
+            <defs>
+              <clipPath id="wave-clip">
+                <circle cx="110" cy="110" r="96"></circle>
+              </clipPath>
+            </defs>
+            <circle cx="110" cy="110" r="96" class="gauge__track"></circle>
+            <g clip-path="url(#wave-clip)">
+              <g id="wave-group" class="wave-group">
+                <path id="wave-path-back" class="wave wave--back" d=""></path>
+                <path id="wave-path-front" class="wave wave--front" d=""></path>
+              </g>
+            </g>
+            <circle cx="110" cy="110" r="96" class="gauge__track gauge__track--top"></circle>
+          </svg>
+          <div class="gauge__label">
+            <span id="gauge-percent" class="gauge__percent">0%</span>
+            <span class="gauge__sub">of goal</span>
+          </div>
+        </div>
+
+        <p class="gauge__readout">
+          <strong id="readout-consumed">0</strong> / <span id="readout-target">0</span> ml
+        </p>
+        <p id="readout-remaining" class="gauge__remaining">0 ml remaining</p>
+      </div>
+
+      <!-- Add water -->
+      <div class="card card--add">
+        <h2 class="card__title">Add Water</h2>
+        <div class="quick-add">
+          <button class="btn btn--chip" data-amount="150">+150 ml</button>
+          <button class="btn btn--chip" data-amount="250">+250 ml</button>
+          <button class="btn btn--chip" data-amount="500">+500 ml</button>
+        </div>
+        <form id="form-custom" class="form form--inline">
+          <input type="number" id="input-custom-amount" min="1" max="5000" placeholder="Custom amount (ml)">
+          <button type="submit" class="btn btn--secondary">Add</button>
+        </form>
+        <p id="water-error" class="form-error" hidden></p>
+
+        <div class="conditions">
+          <p class="conditions__label">Today's conditions <span class="conditions__hint">(used by the ML insight below)</span></p>
+          <div class="conditions__row">
+            <label class="field field--tight">
+              <span class="field__label">Activity</span>
+              <select id="input-activity">
+                <option value="low">Low</option>
+                <option value="moderate" selected>Moderate</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <label class="field field--tight">
+              <span class="field__label">Temp (&deg;C)</span>
+              <input type="number" id="input-temperature" value="25" min="-20" max="55">
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="card card--stats">
+        <h2 class="card__title">Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="stat__value" id="stat-consumed">0 ml</span>
+            <span class="stat__label">Today's intake</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-target">0 ml</span>
+            <span class="stat__label">Daily target</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-remaining">0 ml</span>
+            <span class="stat__label">Remaining</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-percent">0%</span>
+            <span class="stat__label">Completed</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-average">0 ml</span>
+            <span class="stat__label">Average daily intake</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-goalrate">0%</span>
+            <span class="stat__label">Goal completion rate</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" id="stat-streak">0 days</span>
+            <span class="stat__label">Current streak</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weekly chart -->
+      <div class="card card--chart">
+        <h2 class="card__title">Last 7 Days</h2>
+        <img id="weekly-chart" class="weekly-chart" src="" alt="Weekly hydration chart">
+      </div>
+
+      <!-- ML Insight -->
+      <div class="card card--insight">
+        <h2 class="card__title">&#129302; Hydration Insight</h2>
+        <p id="insight-body" class="insight-body">Loading insight&hellip;</p>
+        <p id="insight-note" class="insight-note"></p>
+      </div>
+
+    </main>
+  </section>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

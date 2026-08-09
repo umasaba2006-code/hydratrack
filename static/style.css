@@ -1,0 +1,320 @@
+/* ------------------------------------------------------------------
+   HydraTrack — "Tide" design system
+   Colors:
+     --ink        #123238  deep teal-black, body text
+     --teal       #0F5C6E  primary brand
+     --aqua       #2EC4B6  seafoam accent / water fill
+     --coral      #FF7B54  warm accent, target line, streak
+     --mist       #F4FAFA  page background
+     --foam       #FFFFFF  card surfaces
+   Type:
+     Fraunces  -> headings / hero numbers (characterful serif)
+     Inter     -> body copy, labels, data
+-------------------------------------------------------------------*/
+
+:root {
+  --ink: #123238;
+  --ink-soft: #5c8a94;
+  --teal: #0F5C6E;
+  --teal-deep: #0A4552;
+  --aqua: #2EC4B6;
+  --aqua-soft: #CFF3EF;
+  --coral: #FF7B54;
+  --mist: #F4FAFA;
+  --foam: #FFFFFF;
+  --line: #E1EEF0;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --shadow: 0 12px 30px -14px rgba(15, 92, 110, 0.28);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--mist);
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 { font-family: "Fraunces", serif; margin: 0; }
+
+.app { min-height: 100vh; }
+
+/* ---------- screens ---------- */
+.screen { display: none; }
+.screen.active { display: block; }
+.screen--centered.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* ---------- cards ---------- */
+.card {
+  background: var(--foam);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.card--intro {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+/* ---------- brand ---------- */
+.brand { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.brand__drop { font-size: 2rem; }
+.brand__title { font-size: 2.1rem; color: var(--teal-deep); font-weight: 600; }
+.brand__title--small { font-size: 1.4rem; }
+.brand--small { justify-content: flex-start; }
+
+.brand__tagline {
+  margin: 8px 0 26px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  color: var(--aqua);
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+/* ---------- forms ---------- */
+.form { display: flex; flex-direction: column; gap: 14px; margin-top: 6px; }
+.form--inline { flex-direction: row; gap: 10px; margin-top: 14px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+.field--tight { flex: 1; }
+.field__label { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); }
+
+input, select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--line);
+  background: var(--mist);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+input:focus, select:focus { border-color: var(--aqua); }
+.form--inline input { flex: 1; }
+
+.form-error {
+  color: #C0392B;
+  font-size: 0.85rem;
+  margin: -4px 0 0;
+  text-align: left;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 13px 18px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn--block { width: 100%; }
+
+.btn--primary {
+  background: var(--teal);
+  color: white;
+  box-shadow: 0 10px 20px -10px rgba(15, 92, 110, 0.6);
+}
+.btn--primary:hover { background: var(--teal-deep); }
+
+.btn--secondary {
+  background: var(--aqua);
+  color: var(--teal-deep);
+}
+.btn--secondary:hover { filter: brightness(0.97); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--teal);
+  border: 1.5px solid var(--line);
+}
+.btn--ghost:hover { border-color: var(--aqua); }
+
+.btn--chip {
+  background: var(--aqua-soft);
+  color: var(--teal-deep);
+  flex: 1;
+}
+.btn--chip:hover { background: var(--aqua); color: white; }
+.btn--chip.just-added { animation: chip-pop 0.35s ease; }
+@keyframes chip-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- target screen ---------- */
+.target-hero {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin: 6px 0 14px;
+}
+.target-hero__drop { font-size: 1.6rem; }
+.target-hero__value {
+  font-family: "Fraunces", serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--teal-deep);
+}
+.target-formula {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0 0 18px;
+}
+.disclaimer {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background: var(--mist);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+/* ---------- dashboard layout ---------- */
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.dash-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card--gauge, .card--chart { grid-column: span 1; }
+.card--insight { grid-column: span 2; }
+
+.card__title {
+  font-size: 1.05rem;
+  color: var(--teal-deep);
+  margin-bottom: 16px;
+}
+
+/* ---------- gauge (wave-fill droplet) ---------- */
+.gauge {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 18px;
+}
+.gauge__ring { width: 100%; height: 100%; transform: rotate(0deg); }
+.gauge__track {
+  fill: none;
+  stroke: var(--mist);
+  stroke-width: 4;
+}
+.gauge__track--top { stroke: var(--line); }
+
+.wave-group { transform: translateY(96px); transition: transform 0.6s cubic-bezier(.4,0,.2,1); }
+.wave { fill: var(--aqua); }
+.wave--back { fill: var(--aqua-soft); opacity: 0.85; animation: wave-drift-back 6s linear infinite; }
+.wave--front { fill: var(--aqua); animation: wave-drift-front 3.2s linear infinite; }
+
+@keyframes wave-drift-front {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-220px); }
+}
+@keyframes wave-drift-back {
+  from { transform: translateX(-220px); }
+  to   { transform: translateX(0); }
+}
+
+.gauge__label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.gauge__percent {
+  font-family: "Fraunces", serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--teal-deep);
+  mix-blend-mode: multiply;
+}
+.gauge__sub {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  mix-blend-mode: multiply;
+}
+
+.gauge__readout { text-align: center; font-size: 1.1rem; margin: 6px 0 0; }
+.gauge__remaining { text-align: center; color: var(--ink-soft); font-size: 0.88rem; margin: 4px 0 0; }
+
+/* ---------- add water card ---------- */
+.quick-add { display: flex; gap: 10px; }
+
+.conditions {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+.conditions__label { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); margin: 0 0 10px; }
+.conditions__hint { font-weight: 400; }
+.conditions__row { display: flex; gap: 10px; }
+
+/* ---------- stats ---------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.stat { display: flex; flex-direction: column; gap: 4px; }
+.stat__value { font-family: "Fraunces", serif; font-size: 1.35rem; font-weight: 600; color: var(--teal-deep); }
+.stat__label { font-size: 0.75rem; color: var(--ink-soft); }
+
+/* ---------- chart ---------- */
+.weekly-chart { width: 100%; height: auto; border-radius: var(--radius-md); }
+
+/* ---------- insight ---------- */
+.insight-body { font-size: 1.05rem; line-height: 1.6; margin: 0 0 8px; }
+.insight-note { font-size: 0.8rem; color: var(--ink-soft); margin: 0; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 760px) {
+  .dash-grid { grid-template-columns: 1fr; }
+  .card--insight { grid-column: span 1; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-group, .btn { transition: none; animation: none; }
+}
